@@ -1,0 +1,48 @@
+:root{
+    --primary-purple: #25316D;
+    --disable-purple: #5F6F94;
+    --disable-hover-purple: #a1bdfd;
+    --selected-blue: #97D2EC;
+    --primary-background: #FEF5AC;
+    /* https://colorhunt.co/palette/25316d5f6f9497d2ecfef5ac */
+}
+
+.sidebar-header{
+    padding-left: 2%;
+}
+
+.side-bar-main{
+    background-color: var(--primary-purple);
+    height: 100vh;
+}
+
+.main-content{
+    background-color: var(--primary-background);
+}
+
+.deselected-btn{
+    background-color: var(--disable-purple);
+    border-radius: 0;
+    color:white;
+    width:100%;
+}
+
+.deselected-btn:hover, .account-table-row:hover{
+    background-color: var(--disable-hover-purple);
+    color: white;
+}
+
+.main-content-header{
+    color: var(--primary-purple);
+    padding-top: 3%;
+}
+
+.main-account-table{
+    background-color: var(--disable-purple);
+    border-bottom-color: var(--primary-purple);
+    color:white;
+    margin-left: 25%;
+    margin-right: 15%;
+    text-align: center;
+    width: 50%;
+}
