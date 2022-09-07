@@ -11,14 +11,12 @@
                 </div>
                 <div class="col-12">
                     <table class="table main-account-table">
-                        <tr class="account-table-row">
-                            <td>Account 1</td>
-                            <td>$12345.00</td>
-                        </tr>
-                        <tr class="account-table-row">
-                            <td>Account 2</td>
-                            <td>$-500.00</td>
-                        </tr>
+                        <% accounts.forEach(function(account){ %>
+                            <tr class="account-table-row">
+                                <td><%=  account.name %></td>
+                                <td>$<%=  account.current_balance %></td>
+                            </tr>
+                        <% }); %>
                     </table>
                 </div>
             </div>
