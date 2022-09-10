@@ -6,7 +6,7 @@
         <% accounts.forEach(function(account){ %>
             <button class="btn deselected-btn"><%= account.name %> </button>
         <% }); %>
-        <form action="/add_account" method="post" style="width:100%;">
+        <form action="/add_account" method="get" style="width:100%;">
             <button class="btn deselected-btn">Add account</button>
         </form>
     </div>

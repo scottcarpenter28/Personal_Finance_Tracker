@@ -13,7 +13,7 @@
 
 .side-bar-main{
     background-color: var(--primary-purple);
-    height: 100vh;
+    height: 98vh;
 }
 
 .main-content{
@@ -45,4 +45,14 @@
     margin-right: 15%;
     text-align: center;
     width: 50%;
+}
+
+.custom-row-labels{
+    text-align: right;
+}
+
+.custom-submit-button{
+    background-color: var(--primary-purple);
+    color:white;
+    width:100%;
 }

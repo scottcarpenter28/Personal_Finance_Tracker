@@ -11,51 +11,58 @@
                 </div>
             </div>
             <div class="row">
-                <form action="">
-                    <div class="form-row">
-                        <div class="col-6">
+                <form action="/add_account" method="post">
+                    <div class="row mb-3">
+                        <div class="col-3 custom-row-labels">
                             <span>Account Name</span>
                         </div>
                         <div class="col-6">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="account_name">
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="col-6">
+                    <div class="row mb-3">
+                        <div class="col-3 custom-row-labels">
                             <span>Account Type</span>
                         </div>
                         <div class="col-6">
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" name="account_type" id="checkings-account">
-                                <label for="checkings-account">Checking Account</label>
+                                <input type="radio" class="form-check-input" autocomplete="off" name="account_type" id="checkings-account" value="Checking Account">
+                                <label class="form-check-label" for="checkings-account">Checking Account</label>
                             </div>
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" name="account_type" id="savings-account">
-                                <label for="savings-account">Savings Account</label>
+                                <input type="radio" class="form-check-input" name="account_type" id="savings-account" value="Savings Account">
+                                <label class="form-check-label" for="savings-account">Savings Account</label>
                             </div>
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" name="account_type" id="credit-card">
-                                <label for="credit-card">Credit Card</label>
+                                <input type="radio" class="form-check-input" name="account_type" id="credit-card" value="Credit Card">
+                                <label class="form-check-label" for="credit-card">Credit Card</label>
                             </div>
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" name="account_type" id="investment-account">
-                                <label for="investment_account">Investment Account</label>
+                                <input type="radio" class="form-check-input" name="account_type" id="investment-account" value="Investment Account">
+                                <label class="form-check-label" for="investment-account">Investment Account</label>
                             </div>
                             <div class="input-group">
                                 <div class="input-group-text">
-                                    <input class="form-check-input mt-0" type="radio" name="account_type" aria-label="Radio button for following text input">
+                                    <input class="form-check-input mt-0" type="radio" name="account_type" aria-label="Radio button for following text input" value="Other">
                                 </div>
                                 <span class="input-group-text">Other</span>
-                                <input type="text" class="form-control" aria-label="Text input with radio button">
+                                <input type="text" class="form-control" autocomplete="off" aria-label="Text input with radio button" name="other_account">
                               </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="col-6">
+                    <div class="row mb-3">
+                        <div class="col-3 custom-row-labels">
                             <span>Starting Balance</span>
                         </div>
                         <div class="col-6">
-                            <input type="text" class="form-control">
+                            <input type="number" autocomplete="off" class="form-control" name="starting_balance">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-3 custom-row-labels">
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-lg custom-submit-button" type="submit" name="submit_new_account">Add Account</button>
                         </div>
                     </div>
                 </form>
