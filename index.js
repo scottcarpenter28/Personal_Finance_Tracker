@@ -43,22 +43,10 @@ app.get("/add_account", function(request, response){
 });
 
 app.post("/add_account", function(request, response){
-// Add a new account to the db
-    let account_name = request.body.account_name;
-    // Todo: Add a check for empty/missing account name
-
-    let account_type = request.body.account_type;
-    // Todo: Add a check to make sure that an account type was selected
-
-    let other_account = request.body.other_account;
-    // For a custom account type
-    if(account_type == "Other")
-        account_type = other_account;
-    // Todo: Add a check for empty strings
-
-    let starting_balance = request.body.starting_balance;
-    starting_balance = parseFloat(starting_balance);
-    // Todo: Add a check for bad/undefined numbers
+    let form_body = request.body;
+    let account_name = form_body.name;
+    let account_type = form_body.account_type;
+    let starting_balance = form_body.balance;
 
     let new_account = new FinancialAccount({
         name: account_name, 
@@ -68,11 +56,24 @@ app.post("/add_account", function(request, response){
 
     new_account.save(function(err){
         if(err)
-            console.log(err);
-        response.redirect("/add_account")
+            response.json(json_error("Error occurred while adding the account"));
+        else
+            response.json(json_ok(""));
     });
 });
 
 app.listen(3000, function(){
     console.log("Server started on port 3000");
 }); 
+
+function json_ok(msg){
+    if(msg == undefined)
+        msg = ""
+    return {Error: false, msg};
+}
+
+function json_error(msg){
+    if(msg == undefined)
+        msg = ""
+    return {Error: True, msg};
+}
