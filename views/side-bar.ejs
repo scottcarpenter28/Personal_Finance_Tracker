@@ -4,9 +4,11 @@
 <div class="row">
     <div class="btn-group-vertical" style="padding: 0;">
         <% accounts.forEach(function(account){ %>
-            <button class="btn deselected-btn"><%= account.name %> </button>
+            <form action="/account_view" method="post">
+                <button class="btn deselected-btn" name="account_id" value="<%= account._id %>"><%= account.name %> </button>
+            </form>
         <% }); %>
-        <form action="/add_account" method="get" style="width:100%;">
+        <form action="/add_account" method="get">
             <button class="btn deselected-btn">Add account</button>
         </form>
     </div>

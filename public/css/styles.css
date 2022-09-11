@@ -47,6 +47,11 @@
     width: 50%;
 }
 
+.custom-thead{
+    background-color: var(--disable-purple);
+    color:white;
+}
+
 .custom-row-labels{
     text-align: right;
 }
@@ -55,4 +60,8 @@
     background-color: var(--primary-purple);
     color:white;
     width:100%;
+}
+
+form{
+    width: 100%;
 }

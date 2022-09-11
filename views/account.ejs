@@ -1,0 +1,63 @@
+<%- include("header") -%>
+<body>
+    <div class="row">
+        <div class="col-lg-2 col-md-4 side-bar-main">
+            <%- include("side-bar") -%>
+        </div>
+        <div class="col-lg-10 col-md-8 main-content">
+            <div class="row">
+                <div class="col-12 main-content-header">
+                    <h1 class="text-center"><%= matched_account.name %> </h1>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-2 custom-row-labels">
+                    <span>Balance</span>
+                </div>
+                <div class="col-2">
+                    <input type="text" class="form-control" type="text" readonly>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-2 custom-row-labels">
+                    <span>Month</span>
+                </div>
+                <div class="col-2">
+                    <input type="month" class="form-control" type="text">
+                </div>
+            </div>
+                <div class="row mb-3">
+                    <div class="col-2 custom-row-labels">
+                    </div>
+                    <div class="col-8">
+                        <table class="table">
+                            <thead class="custom-thead">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="date" class="form-control"></td>
+                                    <td><input type="text" class="form-control"></td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-success">+</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include("modal-message") -%>
+</body>
+</html>

@@ -62,9 +62,36 @@ app.post("/add_account", function(request, response){
     });
 });
 
+app.post("/account_view", function(request, response){
+    account_id = request.body.account_id
+
+    FinancialAccount.findById(account_id, function(err, matching_account){
+        if(err)
+            console.log(err);
+        query = find_all_accounts();
+
+        query.then(function(found_accounts){
+            response.render("account", {
+                accounts: found_accounts,
+                matched_account:matching_account
+            });
+        });
+    });
+});
+
 app.listen(3000, function(){
     console.log("Server started on port 3000");
 }); 
+
+async function find_all_accounts () {
+    try{
+        const query = FinancialAccount.find({});
+        return await query;
+    } catch(err){
+        console.error(err);
+        return []
+    }
+}
 
 function json_ok(msg){
     if(msg == undefined)
