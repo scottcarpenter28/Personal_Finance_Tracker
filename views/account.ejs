@@ -1,5 +1,6 @@
 <%- include("header") -%>
 <body>
+    <script src="/js/app.js"></script>
     <div class="row">
         <div class="col-lg-2 col-md-4 side-bar-main">
             <%- include("side-bar") -%>
@@ -40,13 +41,13 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><input type="date" class="form-control"></td>
-                                    <td><input type="text" class="form-control"></td>
+                                    <td><input type="date" class="form-control" id="new-expense-date" value="<%= current_date %> "></td>
+                                    <td><input type="text" class="form-control" id="new-expense-details"></td>
                                     <td>
                                         <div class="input-group">
-                                            <input type="number" class="form-control">
+                                            <input type="number" class="form-control" id="expense-total">
                                             <div class="input-group-append">
-                                                <button class="btn btn-success">+</button>
+                                                <button class="btn btn-success" onclick="click_add_new_expense('<%= matched_account._id %>')">+</button>
                                             </div>
                                         </div>
                                     </td>

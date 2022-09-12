@@ -18,13 +18,20 @@ async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/personal_finance_tracker');
 }
 
-const accountSchema = new mongoose.Schema({
+const account_schema = new mongoose.Schema({
     name: String,
     current_balance: Number,
     account_type: String
 });
-const FinancialAccount = mongoose.model("financialaccount", accountSchema);
+const FinancialAccount = mongoose.model("financialaccount", account_schema);
 
+const expense_schema = new mongoose.Schema({
+    account_id: String,
+    total: Number,
+    description: String,
+    date: Date
+});
+const Expense = mongoose.model("expense", expense_schema);
 
 app.get("/", function(request, response){
     FinancialAccount.find({}, function(err, foundAccounts){
@@ -73,10 +80,21 @@ app.post("/account_view", function(request, response){
         query.then(function(found_accounts){
             response.render("account", {
                 accounts: found_accounts,
-                matched_account:matching_account
+                matched_account:matching_account,
+                current_date: "2022-09-12"
             });
         });
     });
+});
+
+app.post("/add_new_expense", function(request, response){
+    let req_body = request.body;
+    let expense_date = req_body.expense_date;
+    let expense_details = req_body.expense_details;
+    let expense_total = req_body.expense_total;
+    let account_id = req_body.account_id;
+    console.log(expense_date);
+    response.json(json_ok("Data submitted"));
 });
 
 app.listen(3000, function(){
@@ -96,11 +114,11 @@ async function find_all_accounts () {
 function json_ok(msg){
     if(msg == undefined)
         msg = ""
-    return {Error: false, msg};
+    return {Error: false, Message: msg};
 }
 
 function json_error(msg){
     if(msg == undefined)
         msg = ""
-    return {Error: True, msg};
+    return {Error: True, Message: msg};
 }
