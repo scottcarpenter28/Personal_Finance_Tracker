@@ -75,13 +75,27 @@ app.post("/account_view", function(request, response){
     FinancialAccount.findById(account_id, function(err, matching_account){
         if(err)
             console.log(err);
-        query = find_all_accounts();
+        account_query = find_all_accounts();
+        expense_query = find_all_expenses(account_id);
 
-        query.then(function(found_accounts){
-            response.render("account", {
-                accounts: found_accounts,
-                matched_account:matching_account,
-                current_date: "2022-09-12"
+        account_query.then(function(found_accounts){
+            
+            expense_query.then(function(found_expenses){
+                
+                // Format the dates into mm/dd/yyyy
+                formatted_dates = []
+                found_expenses.forEach(function(entry){
+                    let month =String(entry.date.getMonth() + 1);
+                    let day = String(entry.date.getDate());
+                    let year = String(entry.date.getFullYear());
+                    formatted_dates.push({date:String(month +"/"+ day +"/"+ year), description: entry.description, total: entry.total})
+                });
+
+                response.render("account", {
+                    accounts: found_accounts,
+                    matched_account:matching_account,
+                    account_expenses: formatted_dates
+                });
             });
         });
     });
@@ -93,8 +107,20 @@ app.post("/add_new_expense", function(request, response){
     let expense_details = req_body.expense_details;
     let expense_total = req_body.expense_total;
     let account_id = req_body.account_id;
-    console.log(expense_date);
-    response.json(json_ok("Data submitted"));
+
+    let new_expense = new Expense({
+        account_id: account_id,
+        total: expense_total,
+        description: expense_details,
+        date: expense_date
+    });
+    
+    new_expense.save(function(err){
+        if(err)
+            response.json(json_error("An error occurred while submitting a new expense."));
+        else
+            response.json(json_ok(""));
+    });
 });
 
 app.listen(3000, function(){
@@ -106,6 +132,16 @@ async function find_all_accounts () {
         const query = FinancialAccount.find({});
         return await query;
     } catch(err){
+        console.error(err);
+        return []
+    }
+}
+
+async function find_all_expenses(account_id){
+    try{
+        const query = Expense.find({"account_id": account_id})
+        return await query;
+    }catch(err){
         console.error(err);
         return []
     }

@@ -41,7 +41,16 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><input type="date" class="form-control" id="new-expense-date" value="<%= current_date %> "></td>
+                                    <% account_expenses.forEach(function(expense){ %>
+                                        <tr class="account-table-row">
+                                            <td><%=  expense.date %></td>
+                                            <td><%=  expense.description %></td>
+                                            <td>$<%=  expense.total %></td>
+                                        </tr>
+                                    <% }); %>
+                                </tr>
+                                <tr>
+                                    <td><input type="date" class="form-control" id="new-expense-date"></td>
                                     <td><input type="text" class="form-control" id="new-expense-details"></td>
                                     <td>
                                         <div class="input-group">

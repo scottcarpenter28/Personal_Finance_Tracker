@@ -65,7 +65,7 @@ function click_add_new_expense(account_id){
         function(data, status){
             if(data.Error)
                 return show_message_modal("Error", data.Message);
-            console.log(data.Message)
+            location.reload();
         }
     )
 }
@@ -75,3 +75,11 @@ function show_message_modal(title, error_message){
     $("#message-body").text(error_message);
     $("#message-modal").modal("show");
 }
+
+$(document).ready(function() {
+    let now = new Date();
+    let day = ("0" + now.getDate()).slice(-2);
+    let month = ("0" + (now.getMonth() + 1)).slice(-2);
+    let today = now.getFullYear()+"-"+(month)+"-"+(day);
+    $("#new-expense-date").val(today);
+});
