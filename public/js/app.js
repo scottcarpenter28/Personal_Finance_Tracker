@@ -40,7 +40,7 @@ function click_add_new_expense(account_id){
 
     let expense_details = $("#new-expense-details").val();
 
-    const total_reg = /^\d*(\.\d{0,2})?$/;
+    const total_reg = /^-?\d*(\.\d{0,2})?$/;
     let expense_total_before = $("#expense-total").val().match(total_reg);
     console.log(expense_total_before)
 
@@ -82,4 +82,7 @@ $(document).ready(function() {
     let month = ("0" + (now.getMonth() + 1)).slice(-2);
     let today = now.getFullYear()+"-"+(month)+"-"+(day);
     $("#new-expense-date").val(today);
+
+    let month_selection = now.getFullYear()+"-"+(month);
+    $("#month_selection").val(month_selection);
 });

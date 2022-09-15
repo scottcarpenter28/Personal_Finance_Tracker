@@ -119,7 +119,18 @@ app.post("/add_new_expense", function(request, response){
         if(err)
             response.json(json_error("An error occurred while submitting a new expense."));
         else
-            response.json(json_ok(""));
+            FinancialAccount.updateOne(
+                {_id:account_id},
+                { "$inc": { "current_balance": expense_total } },
+                function(err, result){
+                    if(err)
+                        response.json(json_error("An error occurred while updating the account balance"));
+                    else if(result.length == 0)
+                        response.json(json_error("Expense inserted, but no accounts were updated"));
+                    else
+                        response.json(json_ok(""));
+                }
+            );
     });
 });
 
@@ -139,7 +150,7 @@ async function find_all_accounts () {
 
 async function find_all_expenses(account_id){
     try{
-        const query = Expense.find({"account_id": account_id})
+        const query = Expense.find({"account_id": account_id});
         return await query;
     }catch(err){
         console.error(err);
@@ -156,5 +167,5 @@ function json_ok(msg){
 function json_error(msg){
     if(msg == undefined)
         msg = ""
-    return {Error: True, Message: msg};
+    return {Error: true, Message: msg};
 }
