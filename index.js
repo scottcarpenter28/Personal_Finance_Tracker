@@ -70,34 +70,34 @@ app.post("/add_account", function(request, response){
 });
 
 app.post("/account_view", function(request, response){
-    account_id = request.body.account_id
+    account_id = request.body.account_id;
+    FinancialAccount.findById(account_id,
+        function(err, matching_account){
+            if(err)
+                console.log(err);
+            account_query = find_all_accounts();
+            expense_query = find_all_expenses(account_id);
 
-    FinancialAccount.findById(account_id, function(err, matching_account){
-        if(err)
-            console.log(err);
-        account_query = find_all_accounts();
-        expense_query = find_all_expenses(account_id);
-
-        account_query.then(function(found_accounts){
-            
-            expense_query.then(function(found_expenses){
+            account_query.then(function(found_accounts){
                 
-                // Format the dates into mm/dd/yyyy
-                formatted_dates = []
-                found_expenses.forEach(function(entry){
-                    let month =String(entry.date.getMonth() + 1);
-                    let day = String(entry.date.getDate());
-                    let year = String(entry.date.getFullYear());
-                    formatted_dates.push({date:String(month +"/"+ day +"/"+ year), description: entry.description, total: entry.total})
-                });
+                expense_query.then(function(found_expenses){
+                    
+                    // Format the dates into mm/dd/yyyy
+                    formatted_dates = [];
+                    found_expenses.forEach(function(entry){
+                        let month =String(entry.date.getMonth() + 1);
+                        let day = String(entry.date.getDate());
+                        let year = String(entry.date.getFullYear());
+                        formatted_dates.push({date:String(month +"/"+ day +"/"+ year), description: entry.description, total: entry.total})
+                    });
 
-                response.render("account", {
-                    accounts: found_accounts,
-                    matched_account:matching_account,
-                    account_expenses: formatted_dates
+                    response.render("account", {
+                        accounts: found_accounts,
+                        matched_account:matching_account,
+                        account_expenses: formatted_dates
+                    });
                 });
             });
-        });
     });
 });
 
@@ -148,9 +148,22 @@ async function find_all_accounts () {
     }
 }
 
-async function find_all_expenses(account_id){
+async function find_all_expenses(account_id, search_date){
+
+    // If no date was provided, the assume we are looking at the current month
+    if(search_date == undefined)
+        search_date = new Date();
+    else
+        search_date = new Date(search_date);
+
     try{
-        const query = Expense.find({"account_id": account_id});
+        const query = Expense.find({
+            "account_id": account_id,
+            date:{ 
+                $gte: new Date(search_date.getFullYear(), search_date.getMonth(), 1),
+                $lte:  new Date(search_date.getFullYear(), search_date.getMonth(), 31)
+            }
+        });
         return await query;
     }catch(err){
         console.error(err);

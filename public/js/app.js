@@ -34,7 +34,7 @@ function click_add_new_account(){
 
 function click_add_new_expense(account_id){
     let expense_date = $("#new-expense-date").val();
-    expense_date = Date(expense_date);
+    expense_date = new Date(expense_date);
     if(!expense_date instanceof Date)
         return show_message_modal("Error", "Date of expense could not be converted to a date.");
 
