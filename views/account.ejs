@@ -23,8 +23,15 @@
                 <div class="col-2 custom-row-labels">
                     <span>Month</span>
                 </div>
-                <div class="col-2">
-                    <input type="month" class="form-control" type="text" id="month_selection">
+                <div class="col-3">
+                    <form action="/account_view" method="post">
+                        <div class="input-group">
+                            <input type="month" class="form-control" type="text" value="<%= month_view %>" id="month_selection" name="selected_month">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-success" value="<%= matched_account._id %>" name="refresh_account_id">Refresh</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
                 <div class="row mb-3">

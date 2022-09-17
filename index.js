@@ -70,18 +70,48 @@ app.post("/add_account", function(request, response){
 });
 
 app.post("/account_view", function(request, response){
-    account_id = request.body.account_id;
+    let account_id = request.body.account_id;
+
+    // For when accounts are refreshed
+    let selected_month = request.body.selected_month;
+    let refresh_account_id = request.body.refresh_account_id;
+
+    // If the account view is being refreshed to see a different month
+    if(refresh_account_id !== undefined)
+        account_id = refresh_account_id;
+    
+    console.clear()
+    let search_month;
+    if(selected_month !== undefined){
+        const total_reg = /(\d{4})-(\d{2})/;
+        let match_results = selected_month.match(total_reg);
+        console.log(match_results)
+        
+        if(match_results == undefined)
+            search_month = new Date();
+        else{
+            // Convert the selected month to a date string 2022-08 -> 08/01/2022
+            let date_str = match_results[2] + "/01/" + match_results[1];
+            
+            search_month = new Date(date_str);
+            console.log(date_str);
+            console.log(search_month.getMonth());
+            // search_month = new Date();
+        }
+    }
+    else
+        search_month = new Date();
+
     FinancialAccount.findById(account_id,
         function(err, matching_account){
             if(err)
                 console.log(err);
             account_query = find_all_accounts();
-            expense_query = find_all_expenses(account_id);
+            expense_query = find_all_expenses(account_id, search_month);
 
             account_query.then(function(found_accounts){
                 
                 expense_query.then(function(found_expenses){
-                    
                     // Format the dates into mm/dd/yyyy
                     formatted_dates = [];
                     found_expenses.forEach(function(entry){
@@ -91,10 +121,14 @@ app.post("/account_view", function(request, response){
                         formatted_dates.push({date:String(month +"/"+ day +"/"+ year), description: entry.description, total: entry.total})
                     });
 
+                    let month = ("0" + (search_month.getMonth()+1)).slice(-2);
+                    let selected_month = search_month.getFullYear() + "-" + month;
+                    console.log(selected_month)
                     response.render("account", {
                         accounts: found_accounts,
                         matched_account:matching_account,
-                        account_expenses: formatted_dates
+                        account_expenses: formatted_dates,
+                        month_view: selected_month
                     });
                 });
             });
@@ -155,6 +189,8 @@ async function find_all_expenses(account_id, search_date){
         search_date = new Date();
     else
         search_date = new Date(search_date);
+    // console.log("from " + new Date(search_date.getFullYear(), search_date.getMonth(), 1));
+    // console.log("to " + new Date(search_date.getFullYear(), search_date.getMonth(), 30))
 
     try{
         const query = Expense.find({

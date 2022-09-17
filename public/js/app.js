@@ -42,7 +42,6 @@ function click_add_new_expense(account_id){
 
     const total_reg = /^-?\d*(\.\d{0,2})?$/;
     let expense_total_before = $("#expense-total").val().match(total_reg);
-    console.log(expense_total_before)
 
     if(expense_total_before == undefined)
         return show_message_modal("Error", "Expense total was not a valid number.");
@@ -83,6 +82,8 @@ $(document).ready(function() {
     let today = now.getFullYear()+"-"+(month)+"-"+(day);
     $("#new-expense-date").val(today);
 
-    let month_selection = now.getFullYear()+"-"+(month);
-    $("#month_selection").val(month_selection);
+    // if($("#month_selection").val() == undefined){
+    //     let month_selection = now.getFullYear()+"-"+(month);
+    //     $("#month_selection").val(month_selection);
+    // }
 });
